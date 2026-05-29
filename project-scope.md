@@ -58,61 +58,61 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
 
 ### Phase 1 : Backend (Spring Boot 3 & Neon DB)
 
-#### Feature 2.1 : Configuration de la persistance & Schéma de base
-- **Objectif** : Raccorder l'application à Neon DB et générer la table `job_offers`.
-- **Tests** : Validation du démarrage du contexte d'intégration JPA.
+- [x] **Feature 2.1 : Configuration de la persistance & Schéma de base**
+  - **Objectif** : Raccorder l'application à Neon DB et générer la table `job_offers`.
+  - **Tests** : Validation du démarrage du contexte d'intégration JPA.
 
-#### Feature 2.2 : Création d'une offre d'emploi (`POST /api/jobs`)
-- **Objectif** : Validation des données d'entrée du DTO et persistance de l'offre.
-- **Tests** : Tests unitaires du service et test MVC du contrôleur (cas nominaux et cas de rejet de validation).
+- [ ] **Feature 2.2 : Création d'une offre d'emploi (`POST /api/jobs`)**
+  - **Objectif** : Validation des données d'entrée du DTO et persistance de l'offre.
+  - **Tests** : Tests unitaires du service et test MVC du contrôleur (cas nominaux et cas de rejet de validation).
 
-#### Feature 2.3 : Récupération des offres d'emploi (`GET /api/jobs` et `GET /api/jobs/{id}`)
-- **Objectif** : Récupérer la liste complète des offres et le détail d'une offre par son ID.
-- **Tests** : Validation de la présence des données dans le service et des statuts de retour (200 OK, 404 Not Found) dans le contrôleur.
+- [ ] **Feature 2.3 : Récupération des offres d'emploi (`GET /api/jobs` et `GET /api/jobs/{id}`)**
+  - **Objectif** : Récupérer la liste complète des offres et le détail d'une offre par son ID.
+  - **Tests** : Validation de la présence des données dans le service et des statuts de retour (200 OK, 404 Not Found) dans le contrôleur.
 
-#### Feature 2.4 : Mise à jour d'une offre (`PUT /api/jobs/{id}`)
-- **Objectif** : Permettre la modification d'un enregistrement (changement de statut, note, etc.).
-- **Tests** : Validation de la cohérence des mises à jour métier dans la couche service.
+- [ ] **Feature 2.4 : Mise à jour d'une offre (`PUT /api/jobs/{id}`)**
+  - **Objectif** : Permettre la modification d'un enregistrement (changement de statut, note, etc.).
+  - **Tests** : Validation de la cohérence des mises à jour métier dans la couche service.
 
-#### Feature 2.5 : Suppression d'une offre (`DELETE /api/jobs/{id}`)
-- **Objectif** : Retirer définitivement une offre.
-- **Tests** : Validation de la suppression de la donnée en base.
+- [ ] **Feature 2.5 : Suppression d'une offre (`DELETE /api/jobs/{id}`)**
+  - **Objectif** : Retirer définitivement une offre.
+  - **Tests** : Validation de la suppression de la donnée en base.
 
-#### Feature 2.6 : Gestion globale des exceptions
-- **Objectif** : Harmoniser toutes les réponses en cas d'erreur de l'API (400 Bad Request, 404 Not Found) dans une structure JSON identique.
-- **Tests** : Validation du format JSON de retour sur les échecs de requêtes.
+- [ ] **Feature 2.6 : Gestion globale des exceptions**
+  - **Objectif** : Harmoniser toutes les réponses en cas d'erreur de l'API (400 Bad Request, 404 Not Found) dans une structure JSON identique.
+  - **Tests** : Validation du format JSON de retour sur les échecs de requêtes.
 
 ### Phase 2 : Frontend (Angular Standalone & Signals)
 
-#### Feature 3.1 : Squelette, Layout & Routage Standalone
-- **Objectif** : Configurer la navigation et le chargement différé des composants de base.
-- **Tests** : Validation de la configuration des routes et de la présence des composants structurels.
+- [ ] **Feature 3.1 : Squelette, Layout & Routage Standalone**
+  - **Objectif** : Configurer la navigation et le chargement différé des composants de base.
+  - **Tests** : Validation de la configuration des routes et de la présence des composants structurels.
 
-#### Feature 3.2 : Modèles de données & Service API avec State (Signals)
-- **Objectif** : Gérer les appels API et le stockage centralisé de la donnée à l'aide de signaux réactifs.
-- **Tests** : Mocks HTTP avec `HttpTestingController` pour valider la mise à jour des signaux au retour des requêtes.
+- [ ] **Feature 3.2 : Modèles de données & Service API avec State (Signals)**
+  - **Objectif** : Gérer les appels API et le stockage centralisé de la donnée à l'aide de signaux réactifs.
+  - **Tests** : Mocks HTTP avec `HttpTestingController` pour valider la mise à jour des signaux au retour des requêtes.
 
-#### Feature 3.3 : Composants d'affichage (Liste & Cartes)
-- **Objectif** : Intégrer l'interface de visualisation responsive avec les cartes d'offres.
-- **Tests** : Validation du comportement des `@Input` et `@Output` des cartes.
+- [ ] **Feature 3.3 : Composants d'affichage (Liste & Cartes)**
+  - **Objectif** : Intégrer l'interface de visualisation responsive avec les cartes d'offres.
+  - **Tests** : Validation du comportement des `@Input` et `@Output` des cartes.
 
-#### Feature 3.4 : Formulaire Réactif & Validations croisées
-- **Objectif** : Formulaire d'ajout/modification avec validation du format URL et règles conditionnelles d'affichage.
-- **Tests** : Validation de l'activation/désactivation du formulaire et de l'affichage des alertes de saisie.
+- [ ] **Feature 3.4 : Formulaire Réactif & Validations croisées**
+  - **Objectif** : Formulaire d'ajout/modification avec validation du format URL et règles conditionnelles d'affichage.
+  - **Tests** : Validation de l'activation/désactivation du formulaire et de l'affichage des alertes de saisie.
 
-#### Feature 3.5 : Dashboard Statistique & Filtres dynamiques (Signals calculés)
-- **Objectif** : Fournir une barre de recherche instantanée et des KPI automatiques basés sur des signaux de type `computed`.
-- **Tests** : Vérification de la mise à jour automatique des métriques sans appels API superflus.
+- [ ] **Feature 3.5 : Dashboard Statistique & Filtres dynamiques (Signals calculés)**
+  - **Objectif** : Fournir une barre de recherche instantanée et des KPI automatiques basés sur des signaux de type `computed`.
+  - **Tests** : Vérification de la mise à jour automatique des métriques sans appels API superflus.
 
-#### Feature 3.6 : Intercepteur HTTP fonctionnel
-- **Objectif** : Intercepter globalement les erreurs de communication pour avertir l'utilisateur de manière ergonomique.
-- **Tests** : Simulation d'erreurs HTTP et vérification du déclenchement du flux d'alerte.
+- [ ] **Feature 3.6 : Intercepteur HTTP fonctionnel**
+  - **Objectif** : Intercepter globalement les erreurs de communication pour avertir l'utilisateur de manière ergonomique.
+  - **Tests** : Simulation d'erreurs HTTP et vérification du déclenchement du flux d'alerte.
 
 ### Phase 3 : Intégration Continue (CI) & Automatisation
 
-#### Feature 4.1 : Automatisation avec GitHub Actions
-- **Objectif** : Mettre en place un pipeline d'intégration continue qui valide chaque commit sur les branches de travail.
-- **Configuration** :
-  - Création d'un workflow GitHub Actions dans le dossier `.github/workflows/ci.yml`.
-  - **Job Backend** : Configuration de l'environnement JDK 17, mise en cache Maven et exécution des tests via `mvn test`.
-  - **Job Frontend** : Configuration de l'environnement Node.js, installation des dépendances et exécution des tests unitaires Angular en mode headless (sans navigateur graphique).
+- [ ] **Feature 4.1 : Automatisation avec GitHub Actions**
+  - **Objectif** : Mettre en place un pipeline d'intégration continue qui valide chaque commit sur les branches de travail.
+  - **Configuration** :
+    - Création d'un workflow GitHub Actions dans le dossier `.github/workflows/ci.yml`.
+    - **Job Backend** : Configuration de l'environnement JDK 17, mise en cache Maven et exécution des tests via `mvn test`.
+    - **Job Frontend** : Configuration de l'environnement Node.js, installation des dépendances et exécution des tests unitaires Angular en mode headless (sans navigateur graphique).
