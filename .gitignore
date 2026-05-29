@@ -1,0 +1,21 @@
+# Build outputs
+target/
+node_modules/
+dist/
+.angular/
+
+# IDE and OS files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Secrets and local configurations
+.env
+.env.local
+application-local.properties
+application-local.yml
