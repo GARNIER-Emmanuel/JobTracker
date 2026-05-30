@@ -1,0 +1,33 @@
+package com.jobtracker.backend.joboffer;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/jobs")
+public class JobOfferController {
+
+    private final JobOfferService jobOfferService;
+
+    // Injection par constructeur (recommandée)
+    public JobOfferController(JobOfferService jobOfferService) {
+        this.jobOfferService = jobOfferService;
+    }
+
+    // TODO: Implémente le point d'accès POST qui prend en entrée le DTO et renvoie
+    // 201 Created
+    @PostMapping
+    public ResponseEntity<JobOfferDto> createJob(
+            // @Valid déclenche la validation automatique du DTO
+            // @RequestBody indique que le JSON doit être désérialisé dans cet objet
+            @Valid @RequestBody JobOfferDto request) {
+        // 1. On délègue le traitement métier au service
+        JobOfferDto response = jobOfferService.saveJob(request);
+        // 2. On renvoie la réponse enveloppée dans un ResponseEntity avec le statut 201
+        // Created
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+}
