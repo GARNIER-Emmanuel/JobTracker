@@ -66,7 +66,7 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
   - **Objectif** : Validation des données d'entrée du DTO et persistance de l'offre.
   - **Tests** : Tests unitaires du service et test MVC du contrôleur (cas nominaux et cas de rejet de validation).
 
-- [ ] **Feature 2.3 : Récupération des offres d'emploi (`GET /api/jobs` et `GET /api/jobs/{id}`)**
+- [x] **Feature 2.3 : Récupération des offres d'emploi (`GET /api/jobs` et `GET /api/jobs/{id}`)**
   - **Objectif** : Récupérer la liste complète des offres et le détail d'une offre par son ID.
   - **Tests** : Validation de la présence des données dans le service et des statuts de retour (200 OK, 404 Not Found) dans le contrôleur.
 
