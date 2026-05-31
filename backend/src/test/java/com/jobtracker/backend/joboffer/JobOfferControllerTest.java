@@ -201,4 +201,30 @@ class JobOfferControllerTest {
                                 .andExpect(status().isNotFound()); // 404 Not Found
         }
 
+        @Test
+        void should_return_400_and_custom_error_format_when_title_is_blank() throws Exception {
+                // 1. Arrange : On prépare un JSON invalide (le titre est vide, ce qui est
+                // interdit)
+                String invalidJobOfferJson = """
+                                {
+                                    "title": "",
+                                    "company": "Google",
+                                    "offerUrl": "https://careers.google.com/jobs/123",
+                                    "applicationDate": "2026-05-29",
+                                    "status": "APPLIED"
+                                }
+                                """;
+
+                // 2. Act & Assert
+                mockMvc.perform(post("/api/jobs")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(invalidJobOfferJson))
+                                // On s'attend à un statut 400 Bad Request
+                                .andExpect(status().isBadRequest())
+                                // On vérifie que la réponse contient notre structure personnalisée d'erreur
+                                .andExpect(jsonPath("$.status").value(400))
+                                .andExpect(jsonPath("$.message").value("Validation failed"))
+                                .andExpect(jsonPath("$.errors.title").exists());
+        }
+
 }
