@@ -1,5 +1,7 @@
 package com.jobtracker.backend.joboffer;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +31,15 @@ public class JobOfferController {
         // 2. On renvoie la réponse enveloppée dans un ResponseEntity avec le statut 201
         // Created
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<JobOfferDto>> getAllJobs() {
+        // TODO: Appelle ton service pour récupérer les offres
+        List<JobOfferDto> response = jobOfferService.getAllJobs();
+
+        // TODO: Retourne la liste enveloppée dans un ResponseEntity avec le statut 200
+        // OK
+        return ResponseEntity.ok(response);
     }
 }

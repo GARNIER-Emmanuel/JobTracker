@@ -62,7 +62,7 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
   - **Objectif** : Raccorder l'application à Neon DB et générer la table `job_offers`.
   - **Tests** : Validation du démarrage du contexte d'intégration JPA.
 
-- [ ] **Feature 2.2 : Création d'une offre d'emploi (`POST /api/jobs`)**
+- [x] **Feature 2.2 : Création d'une offre d'emploi (`POST /api/jobs`)**
   - **Objectif** : Validation des données d'entrée du DTO et persistance de l'offre.
   - **Tests** : Tests unitaires du service et test MVC du contrôleur (cas nominaux et cas de rejet de validation).
 
