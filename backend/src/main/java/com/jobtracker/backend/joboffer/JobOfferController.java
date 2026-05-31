@@ -54,4 +54,14 @@ public class JobOfferController {
                 .map(dto -> ResponseEntity.ok(dto)) // Si l'offre existe, on renvoie 200 OK avec le DTO
                 .orElse(ResponseEntity.notFound().build()); // Si elle n'existe pas, on renvoie 404 Not Found
     }
+
+    // @PostMapping
+    // public ResponseEntity<JobOfferDto> updateJob(@PathVariable UUID id) {
+    // // 1. On délègue le traitement métier au service
+    // JobOfferDto response;
+    // // 2. On renvoie la réponse enveloppée dans un ResponseEntity avec le statut
+    // 201
+    // // Created
+    // return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    // }
 }

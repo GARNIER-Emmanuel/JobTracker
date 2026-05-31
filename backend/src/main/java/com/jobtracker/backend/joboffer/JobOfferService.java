@@ -53,4 +53,11 @@ public class JobOfferService {
                 entity.getStatus()));
     }
 
+    // N'oublie pas d'importer java.util.Optional et java.util.UUID si nécessaire
+    public Optional<JobOfferDto> updateJob(UUID id, JobOfferDto request) {
+        // Pour l'instant, on se contente de retourner un Optional rempli pour faire
+        // compiler
+        return Optional.of(request);
+    }
+
 }
