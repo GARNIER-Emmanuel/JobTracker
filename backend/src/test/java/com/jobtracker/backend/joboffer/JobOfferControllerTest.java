@@ -67,4 +67,34 @@ class JobOfferControllerTest {
                 .andExpect(jsonPath("$[0].company").value("Google"));
     }
 
+    @Test
+    void should_get_a_job_offers_and_return_200_when_exist() throws Exception {
+        // 1. On génère un UUID factice pour notre test
+        java.util.UUID jobId = java.util.UUID.randomUUID();
+        // Arrange : Prépare une liste fictive contenant une offre d'emploi DTO
+        JobOfferDto mockOffer = new JobOfferDto(
+                "Développeur Fullstack Java/Angular",
+                "Google",
+                "https://careers.google.com/jobs/123",
+                java.time.LocalDate.now(),
+                "APPLIED");
+
+        // 3. On programme le mock : "Quand le service reçoit CET UUID, il retourne
+        // notre offre"
+        // On utilise Optional.of(mockOffer) pour indiquer que l'offre a bien été
+        // trouvée
+        org.mockito.Mockito.when(jobOfferService.getJobById(jobId))
+                .thenReturn(java.util.Optional.of(mockOffer));
+
+        // Act & Assert : Tente d'appeler GET /api/jobs
+        mockMvc.perform(get("/api/jobs/" + jobId)
+                .contentType(MediaType.APPLICATION_JSON))
+                // On s'attend à recevoir 200 OK
+                .andExpect(status().isOk())
+                // On peut optionnellement vérifier que le JSON renvoyé contient bien nos
+                // données
+                .andExpect(jsonPath("$.title").value("Développeur Fullstack Java/Angular"))
+                .andExpect(jsonPath("$.company").value("Google"));
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.jobtracker.backend.joboffer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -37,6 +38,19 @@ public class JobOfferService {
     public List<JobOfferDto> getAllJobs() {
         // 1. Créer le plat final (l'entité JPA)
         return List.of();
+    }
+
+    public Optional<JobOfferDto> getJobById(UUID id) {
+        // 1. On cherche l'entité en base grâce à son UUID
+        Optional<JobOffer> entityOptional = jobOfferRepository.findById(id);
+        // 2. On convertit l'entité trouvée en DTO (si elle existe)
+        // La méthode .map() de l'Optional permet de faire cette conversion proprement
+        return entityOptional.map(entity -> new JobOfferDto(
+                entity.getTitle(),
+                entity.getCompany(),
+                entity.getOfferUrl(),
+                entity.getApplicationDate(),
+                entity.getStatus()));
     }
 
 }
