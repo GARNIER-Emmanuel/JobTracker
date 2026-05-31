@@ -1,5 +1,6 @@
 package com.jobtracker.backend.joboffer;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -32,4 +33,10 @@ public class JobOfferService {
         // 4. Retourner le résultat
         return request;
     }
+
+    public List<JobOfferDto> getAllJobs() {
+        // 1. Créer le plat final (l'entité JPA)
+        return List.of();
+    }
+
 }
