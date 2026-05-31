@@ -53,11 +53,28 @@ public class JobOfferService {
                 entity.getStatus()));
     }
 
-    // N'oublie pas d'importer java.util.Optional et java.util.UUID si nécessaire
     public Optional<JobOfferDto> updateJob(UUID id, JobOfferDto request) {
-        // Pour l'instant, on se contente de retourner un Optional rempli pour faire
-        // compiler
-        return Optional.of(request);
+        return jobOfferRepository.findById(id)
+                .map(existingJob -> {
+                    // a. Mettre à jour les champs de l'entité existante
+                    existingJob.setTitle(request.title());
+                    existingJob.setCompany(request.company());
+                    existingJob.setOfferUrl(request.offerUrl());
+                    existingJob.setApplicationDate(request.applicationDate());
+                    existingJob.setStatus(request.status());
+
+                    // b. Sauvegarder l'entité modifiée en base de données
+                    JobOffer savedJob = jobOfferRepository.save(existingJob);
+
+                    // c. Retourner le DTO correspondant à l'entité sauvegardée
+                    return new JobOfferDto(
+                            savedJob.getTitle(),
+                            savedJob.getCompany(),
+                            savedJob.getOfferUrl(),
+                            savedJob.getApplicationDate(),
+                            savedJob.getStatus());
+                }); // Si l'id n'existe pas en base, findById retourne Optional.empty() et le map
+                    // n'est pas exécuté
     }
 
 }
