@@ -64,4 +64,25 @@ public class JobOfferController {
                 .map(dto -> ResponseEntity.ok(dto)) // Si l'offre existe, on renvoie 200 OK avec le DTO
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    // DELETE CLASSIQUE IF ELSE
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> deleteJob(@PathVariable UUID id) {
+    // // 1. On évalue le retour de la méthode
+    // if (jobOfferService.deleteJob(id)) {
+    // // Si true : on construit la réponse 204 No Content
+    // return ResponseEntity.noContent().build();
+    // } else {
+    // // Si false : on construit la réponse 404 Not Found
+    // return ResponseEntity.notFound().build();
+    // }
+    // }
+
+    // DELETE AVEC TERNAIRE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteJob(@PathVariable UUID id) {
+        return jobOfferService.deleteJob(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
 }

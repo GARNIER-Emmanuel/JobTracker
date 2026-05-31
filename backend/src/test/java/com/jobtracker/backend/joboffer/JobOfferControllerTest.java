@@ -7,6 +7,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -176,6 +177,28 @@ class JobOfferControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(updatedJobOfferJson)) // On passe le JSON obligatoire
                                 .andExpect(status().isNotFound());
+        }
+
+        @Test
+        void should_delete_job_offer_and_return_204_when_exist() throws Exception {
+                java.util.UUID jobId = java.util.UUID.randomUUID();
+                // On programme le mock : si l'ID est trouvé, le service renvoie true
+                org.mockito.Mockito.when(jobOfferService.deleteJob(jobId)).thenReturn(true);
+                // Act & Assert
+                mockMvc.perform(delete("/api/jobs/" + jobId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isNoContent()); // 204 No Content
+        }
+
+        @Test
+        void should_return_404_when_deleting_non_existent_job_offer() throws Exception {
+                java.util.UUID nonExistentId = java.util.UUID.randomUUID();
+                // On programme le mock : si l'ID n'est pas trouvé, le service renvoie false
+                org.mockito.Mockito.when(jobOfferService.deleteJob(nonExistentId)).thenReturn(false);
+                // Act & Assert
+                mockMvc.perform(delete("/api/jobs/" + nonExistentId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isNotFound()); // 404 Not Found
         }
 
 }

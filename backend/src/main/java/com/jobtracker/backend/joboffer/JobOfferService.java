@@ -3,7 +3,6 @@ package com.jobtracker.backend.joboffer;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,6 +74,18 @@ public class JobOfferService {
                             savedJob.getStatus());
                 }); // Si l'id n'existe pas en base, findById retourne Optional.empty() et le map
                     // n'est pas exécuté
+    }
+
+    public boolean deleteJob(UUID id) {
+        // 1. On vérifie si l'entité existe en base de données
+        if (jobOfferRepository.existsById(id)) {
+            // 2. Si oui, on la supprime
+            jobOfferRepository.deleteById(id);
+            // 3. Et on retourne true pour confirmer la suppression
+            return true;
+        }
+        // 4. Si non, on retourne false directement
+        return false;
     }
 
 }
