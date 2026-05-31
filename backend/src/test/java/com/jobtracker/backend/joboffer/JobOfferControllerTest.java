@@ -97,4 +97,17 @@ class JobOfferControllerTest {
                 .andExpect(jsonPath("$.company").value("Google"));
     }
 
+    @Test
+    void should_return_404_when_job_offer_does_not_exist() throws Exception {
+        java.util.UUID nonExistentId = java.util.UUID.randomUUID();
+        // On programme le mock : "Quand on cherche un ID inconnu, on retourne du vide
+        // (Optional.empty())"
+        org.mockito.Mockito.when(jobOfferService.getJobById(nonExistentId))
+                .thenReturn(java.util.Optional.empty());
+        // Act & Assert
+        mockMvc.perform(get("/api/jobs/" + nonExistentId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
 }
