@@ -80,9 +80,10 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
   - **Tests** : Validation de la suppression de la donnée en base.
   - **Status** : Complété et fusionné.
 
-- [ ] **Feature 2.6 : Gestion globale des exceptions**
+- [x] **Feature 2.6 : Gestion globale des exceptions**
   - **Objectif** : Harmoniser toutes les réponses en cas d'erreur de l'API (400 Bad Request, 404 Not Found) dans une structure JSON identique.
   - **Tests** : Validation du format JSON de retour sur les échecs de requêtes.
+  - **Status** : Complété et fusionné.
 
 ### Phase 2 : Frontend (Angular Standalone & Signals)
 
