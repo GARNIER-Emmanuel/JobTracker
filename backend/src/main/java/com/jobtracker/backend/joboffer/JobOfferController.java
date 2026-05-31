@@ -44,24 +44,14 @@ public class JobOfferController {
         return ResponseEntity.ok(response);
     }
 
-    // @GetMapping("/{id}")
-    // // 1. On utilise @PathVariable pour extraire l'id de la route HTTP
-    // public ResponseEntity<JobOfferDto> getJobById(@PathVariable UUID id) {
-
-    // // 2. On appelle notre service qui nous renvoie un Optional
-    // // Et on utilise le map/orElse de l'Optional pour formuler la réponse !
-    // return jobOfferService.getJobById(id)
-    // .map(dto -> ResponseEntity.ok(dto)) // Si l'offre existe, on renvoie 200 OK
-    // avec le DTO
-    // .orElse(ResponseEntity.notFound().build()); // Si elle n'existe pas, on
-    // renvoie 404 Not Found
-    // }
-
     @GetMapping("/{id}")
+    // 1. On utilise @PathVariable pour extraire l'id de la route HTTP
     public ResponseEntity<JobOfferDto> getJobById(@PathVariable UUID id) {
-        JobOfferDto response = jobOfferService.getJobById(id).orElse(null);
-        // On renvoie TOUJOURS 200 OK, même si response est null !
-        return ResponseEntity.ok(response);
-    }
 
+        // 2. On appelle notre service qui nous renvoie un Optional
+        // Et on utilise le map/orElse de l'Optional pour formuler la réponse !
+        return jobOfferService.getJobById(id)
+                .map(dto -> ResponseEntity.ok(dto)) // Si l'offre existe, on renvoie 200 OK avec le DTO
+                .orElse(ResponseEntity.notFound().build()); // Si elle n'existe pas, on renvoie 404 Not Found
+    }
 }
