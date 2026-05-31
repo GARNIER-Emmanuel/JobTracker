@@ -70,13 +70,15 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
   - **Objectif** : Récupérer la liste complète des offres et le détail d'une offre par son ID.
   - **Tests** : Validation de la présence des données dans le service et des statuts de retour (200 OK, 404 Not Found) dans le contrôleur.
 
-- [ ] **Feature 2.4 : Mise à jour d'une offre (`PUT /api/jobs/{id}`)**
+- [x] **Feature 2.4 : Mise à jour d'une offre (`PUT /api/jobs/{id}`)**
   - **Objectif** : Permettre la modification d'un enregistrement (changement de statut, note, etc.).
   - **Tests** : Validation de la cohérence des mises à jour métier dans la couche service.
+  - **Status** : Complété et fusionné.
 
-- [ ] **Feature 2.5 : Suppression d'une offre (`DELETE /api/jobs/{id}`)**
+- [x] **Feature 2.5 : Suppression d'une offre (`DELETE /api/jobs/{id}`)**
   - **Objectif** : Retirer définitivement une offre.
   - **Tests** : Validation de la suppression de la donnée en base.
+  - **Status** : Complété et fusionné.
 
 - [ ] **Feature 2.6 : Gestion globale des exceptions**
   - **Objectif** : Harmoniser toutes les réponses en cas d'erreur de l'API (400 Bad Request, 404 Not Found) dans une structure JSON identique.
