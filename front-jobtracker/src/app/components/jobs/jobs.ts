@@ -1,9 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { JobCard } from './job-card/job-card';
+import { Job } from '../../services/job';
 
 @Component({
   selector: 'app-jobs',
-  imports: [],
+  imports: [JobCard],
   templateUrl: './jobs.html',
   styleUrl: './jobs.css',
 })
-export class Jobs {}
+export class Jobs implements OnInit {
+
+  protected readonly jobService = inject(Job);
+
+  ngOnInit(): void {
+    this.jobService.loadAll();
+  }
+}

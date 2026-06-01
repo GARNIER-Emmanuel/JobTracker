@@ -1,1 +1,4 @@
-<p>jobs works!</p>
+<p>Liste des candidatures</p>
+@for (offer of jobService.jobs(); track offer.id) {
+<app-job-card [job]="offer"></app-job-card>
+}
