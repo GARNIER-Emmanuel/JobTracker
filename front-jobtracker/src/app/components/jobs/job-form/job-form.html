@@ -1,1 +1,26 @@
-<p>job-form works!</p>
+<h2>Nouvelle Offre :</h2>
+<form [formGroup]="jobForm">
+    <div class="form-group">
+        <label for="title">Titre du poste </label>
+        <input id="title" type="text" formControlName="title">
+    </div>
+    <div class="form-group">
+        <label for="company">Nom de l'entreprise </label>
+        <input id="company" type="text" formControlName="company">
+    </div>
+    <div class="form-group">
+        <label for="offerUrl">Lien de l'offre </label>
+        <input id="offerUrl" type="text" formControlName="offerUrl">
+        @if (jobForm.get('offerUrl')?.errors?.['pattern'] && jobForm.get('offerUrl')?.touched) {
+        <span class="error">Le lien doit être une URL valide (ex: http...).</span>
+        }
+    </div>
+    <div class="form-group">
+        <label for="applicationDate">Date de candidature </label>
+        <input id="applicationDate" type="date" formControlName="applicationDate">
+        @if (jobForm.get('applicationDate')?.errors?.['futureDate'] && jobForm.get('applicationDate')?.touched) {
+        <span class="error">La date ne peut pas être dans le futur.</span>
+        }
+    </div>
+    <button type="submit" [disabled]="jobForm.invalid">Ajouter</button>
+</form>

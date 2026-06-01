@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { JobForm } from './components/jobs/job-form/job-form';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, JobForm],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
