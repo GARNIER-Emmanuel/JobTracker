@@ -91,11 +91,11 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
   - **Objectif** : Configurer le layout de l'application et mettre en place la configuration proxy (`proxy.conf.json`) pour rediriger les appels de `/api/*` vers le backend local Spring Boot (port 8080).
   - **Tests** : Validation de la redirection du trafic API et présence des composants structurels de base.
 
-- [ ] **Feature 3.2 : Service API complet (CRUD) & Gestion du State (Signals)**
+- [x] **Feature 3.2 : Service API complet (CRUD) & Gestion du State (Signals)**
   - **Objectif** : Implémenter les appels HTTP restants (`POST`, `PUT`, `DELETE`) dans le service `Job` pour assurer la création, la modification et la suppression réelles des offres, tout en mettant à jour le signal `_jobs`.
   - **Tests** : Mocks HTTP avec `HttpTestingController` pour valider la mise à jour automatique des signaux après chaque opération d'écriture ou d'effacement.
 
-- [ ] **Feature 3.3 : Intégration globale & Actions utilisateur (Liste, Cartes & Soumission du Formulaire)**
+- [x] **Feature 3.3 : Intégration globale & Actions utilisateur (Liste, Cartes & Soumission du Formulaire)**
   - **Objectif** : Lier la soumission de `JobForm` aux méthodes de création/mise à jour du service, intégrer des actions de suppression et d'édition sur les cartes d'offres (`app-job-card`), et assembler ces éléments dans l'interface globale.
   - **Tests** : Tests d'intégration validant le flux complet, de la saisie utilisateur à la mise à jour réactive de la liste et du dashboard.
 
@@ -113,7 +113,7 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
 
 ### Phase 3 : Intégration Continue (CI) & Automatisation
 
-- [ ] **Feature 4.1 : Automatisation avec GitHub Actions**
+- [x] **Feature 4.1 : Automatisation avec GitHub Actions**
   - **Objectif** : Mettre en place un pipeline d'intégration continue qui valide chaque commit sur les branches de travail.
   - **Configuration** :
     - Création d'un workflow GitHub Actions dans le dossier `.github/workflows/ci.yml`.
