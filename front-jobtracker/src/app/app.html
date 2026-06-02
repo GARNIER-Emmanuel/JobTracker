@@ -1,3 +1,9 @@
+@if (errorService.errorMessage()) {
+<div class="error-banner">
+  <span class="error-message">{{ errorService.errorMessage() }}</span>
+  <button class="close-btn" (click)="errorService.clearError()">×</button>
+</div>
+}
 <header>
   <h1>JobTracker</h1>
 </header>
