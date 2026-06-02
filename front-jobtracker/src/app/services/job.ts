@@ -41,5 +41,35 @@ export class Job {
     );
   });
 
+  // @param offer Les données de l'offre d'emploi à créer (sans son identifiant)
+  create(offer: Omit<JobOffer, 'id'>): void {
+    this.http.post<JobOffer>('/api/jobs', offer)
+      .subscribe((newJob) => {
+        // Ajoute la nouvelle offre retournée par la BDD à la fin du tableau réactif
+        this._jobs.update((jobs) => [...jobs, newJob]);
+      });
+  }
+
+  // @param id L'identifiant unique (UUID) de l'offre à modifier
+  // @param updatedFields Les champs de l'offre à mettre à jour
+  update(id: string, updatedFields: Partial<JobOffer>): void {
+    this.http.put<JobOffer>(`/api/jobs/${id}`, updatedFields)
+      .subscribe((updatedJob) => {
+        // Remplace l'offre existante par la version mise à jour retournée par le serveur
+        this._jobs.update((jobs) =>
+          jobs.map((job) => (job.id === id ? updatedJob : job))
+        );
+      });
+  }
+
+  // @param id L'identifiant unique (UUID) de l'offre à supprimer
+  delete(id: string): void {
+    this.http.delete<void>(`/api/jobs/${id}`)
+      .subscribe(() => {
+        // Filtre le tableau réactif local pour en exclure l'offre supprimée
+        this._jobs.update((jobs) => jobs.filter((job) => job.id !== id));
+      });
+  }
+
 
 }
