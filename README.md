@@ -58,12 +58,28 @@ Pour garantir un niveau de qualité professionnel, ce projet applique rigoureuse
 ### Lancement du Backend
 ```bash
 cd backend
-mvn clean spring-boot:run
+# Sous Windows
+.\mvnw spring-boot:run
+
+# Sous Linux/macOS
+./mvnw spring-boot:run
 ```
 
 ### Lancement du Frontend
 ```bash
 cd front-jobtracker
 npm install
-npm run dev
+npm run start
 ```
+
+> [!TIP]
+> **Proxy API Dynamique** : Le frontend utilise un proxy dynamique (`proxy.conf.js`). Par défaut, il redirige les requêtes de `/api/*` vers `http://localhost:8080`.
+> Si votre backend s'exécute sur un autre port ou un autre domaine, vous pouvez définir la variable d'environnement `API_URL` au démarrage :
+> * **PowerShell (Windows)** :
+>   ```powershell
+>   $env:API_URL="http://localhost:9000"; npm run start
+>   ```
+> * **Bash (Linux/macOS)** :
+>   ```bash
+>   API_URL="http://localhost:9000" npm run start
+>   ```

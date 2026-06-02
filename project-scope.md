@@ -87,17 +87,17 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
 
 ### Phase 2 : Frontend (Angular Standalone & Signals)
 
-- [ ] **Feature 3.1 : Squelette, Layout & Routage Standalone**
-  - **Objectif** : Configurer la navigation et le chargement différé des composants de base.
-  - **Tests** : Validation de la configuration des routes et de la présence des composants structurels.
+- [x] **Feature 3.1 : Squelette, Layout & Configuration du Proxy API**
+  - **Objectif** : Configurer le layout de l'application et mettre en place la configuration proxy (`proxy.conf.json`) pour rediriger les appels de `/api/*` vers le backend local Spring Boot (port 8080).
+  - **Tests** : Validation de la redirection du trafic API et présence des composants structurels de base.
 
-- [ ] **Feature 3.2 : Modèles de données & Service API avec State (Signals)**
-  - **Objectif** : Gérer les appels API et le stockage centralisé de la donnée à l'aide de signaux réactifs.
-  - **Tests** : Mocks HTTP avec `HttpTestingController` pour valider la mise à jour des signaux au retour des requêtes.
+- [ ] **Feature 3.2 : Service API complet (CRUD) & Gestion du State (Signals)**
+  - **Objectif** : Implémenter les appels HTTP restants (`POST`, `PUT`, `DELETE`) dans le service `Job` pour assurer la création, la modification et la suppression réelles des offres, tout en mettant à jour le signal `_jobs`.
+  - **Tests** : Mocks HTTP avec `HttpTestingController` pour valider la mise à jour automatique des signaux après chaque opération d'écriture ou d'effacement.
 
-- [ ] **Feature 3.3 : Composants d'affichage (Liste & Cartes)**
-  - **Objectif** : Intégrer l'interface de visualisation responsive avec les cartes d'offres.
-  - **Tests** : Validation du comportement des `@Input` et `@Output` des cartes.
+- [ ] **Feature 3.3 : Intégration globale & Actions utilisateur (Liste, Cartes & Soumission du Formulaire)**
+  - **Objectif** : Lier la soumission de `JobForm` aux méthodes de création/mise à jour du service, intégrer des actions de suppression et d'édition sur les cartes d'offres (`app-job-card`), et assembler ces éléments dans l'interface globale.
+  - **Tests** : Tests d'intégration validant le flux complet, de la saisie utilisateur à la mise à jour réactive de la liste et du dashboard.
 
 - [x] **Feature 3.4 : Formulaire Réactif & Validations croisées**
   - **Objectif** : Formulaire d'ajout/modification avec validation du format URL et règles conditionnelles d'affichage.
