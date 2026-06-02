@@ -21,57 +21,114 @@ public class JobOfferService {
         // 2. Générer un identifiant unique
         entity.setId(UUID.randomUUID());
 
-        // TODO: Recopie les valeurs du DTO request dans ton entity
-        // Exemple : entity.setTitle(request.title());
+        // Recopie de toutes les valeurs du DTO dans l'entité
         entity.setTitle(request.title());
         entity.setCompany(request.company());
+        entity.setLocation(request.location());
         entity.setOfferUrl(request.offerUrl());
-        entity.setApplicationDate(request.applicationDate());
+        entity.setSalary(request.salary());
+        entity.setContactName(request.contactName());
         entity.setStatus(request.status());
+        entity.setContacted(request.contacted());
+        entity.setResponse(request.response());
+        entity.setRemoteWork(request.remoteWork());
+        entity.setApplicationDate(request.applicationDate());
+        entity.setNotes(request.notes());
+
         // 3. Sauvegarder dans le frigo (base de données)
         jobOfferRepository.save(entity);
-        // 4. Retourner le résultat
-        return request;
+
+        // 4. Retourner le résultat complet avec l'UUID généré
+        return new JobOfferDto(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getCompany(),
+                entity.getLocation(),
+                entity.getOfferUrl(),
+                entity.getSalary(),
+                entity.getContactName(),
+                entity.getStatus(),
+                entity.isContacted(),
+                entity.getResponse(),
+                entity.getRemoteWork(),
+                entity.getApplicationDate(),
+                entity.getNotes());
     }
 
     public List<JobOfferDto> getAllJobs() {
-        // 1. Créer le plat final (l'entité JPA)
-        return List.of();
+        return jobOfferRepository.findAll().stream()
+                .map(entity -> new JobOfferDto(
+                        entity.getId(),
+                        entity.getTitle(),
+                        entity.getCompany(),
+                        entity.getLocation(),
+                        entity.getOfferUrl(),
+                        entity.getSalary(),
+                        entity.getContactName(),
+                        entity.getStatus(),
+                        entity.isContacted(),
+                        entity.getResponse(),
+                        entity.getRemoteWork(),
+                        entity.getApplicationDate(),
+                        entity.getNotes()))
+                .toList();
     }
 
     public Optional<JobOfferDto> getJobById(UUID id) {
         // 1. On cherche l'entité en base grâce à son UUID
         Optional<JobOffer> entityOptional = jobOfferRepository.findById(id);
         // 2. On convertit l'entité trouvée en DTO (si elle existe)
-        // La méthode .map() de l'Optional permet de faire cette conversion proprement
         return entityOptional.map(entity -> new JobOfferDto(
+                entity.getId(),
                 entity.getTitle(),
                 entity.getCompany(),
+                entity.getLocation(),
                 entity.getOfferUrl(),
+                entity.getSalary(),
+                entity.getContactName(),
+                entity.getStatus(),
+                entity.isContacted(),
+                entity.getResponse(),
+                entity.getRemoteWork(),
                 entity.getApplicationDate(),
-                entity.getStatus()));
+                entity.getNotes()));
     }
 
     public Optional<JobOfferDto> updateJob(UUID id, JobOfferDto request) {
         return jobOfferRepository.findById(id)
                 .map(existingJob -> {
-                    // a. Mettre à jour les champs de l'entité existante
+                    // a. Mettre à jour tous les champs de l'entité existante
                     existingJob.setTitle(request.title());
                     existingJob.setCompany(request.company());
+                    existingJob.setLocation(request.location());
                     existingJob.setOfferUrl(request.offerUrl());
-                    existingJob.setApplicationDate(request.applicationDate());
+                    existingJob.setSalary(request.salary());
+                    existingJob.setContactName(request.contactName());
                     existingJob.setStatus(request.status());
+                    existingJob.setContacted(request.contacted());
+                    existingJob.setResponse(request.response());
+                    existingJob.setRemoteWork(request.remoteWork());
+                    existingJob.setApplicationDate(request.applicationDate());
+                    existingJob.setNotes(request.notes());
 
                     // b. Sauvegarder l'entité modifiée en base de données
                     JobOffer savedJob = jobOfferRepository.save(existingJob);
 
-                    // c. Retourner le DTO correspondant à l'entité sauvegardée
+                    // c. Retourner le DTO complet correspondant à l'entité sauvegardée
                     return new JobOfferDto(
+                            savedJob.getId(),
                             savedJob.getTitle(),
                             savedJob.getCompany(),
+                            savedJob.getLocation(),
                             savedJob.getOfferUrl(),
+                            savedJob.getSalary(),
+                            savedJob.getContactName(),
+                            savedJob.getStatus(),
+                            savedJob.isContacted(),
+                            savedJob.getResponse(),
+                            savedJob.getRemoteWork(),
                             savedJob.getApplicationDate(),
-                            savedJob.getStatus());
+                            savedJob.getNotes());
                 }); // Si l'id n'existe pas en base, findById retourne Optional.empty() et le map
                     // n'est pas exécuté
     }

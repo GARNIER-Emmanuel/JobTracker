@@ -23,6 +23,24 @@ class JobOfferControllerTest {
         @MockBean
         private JobOfferService jobOfferService; // Nous aurons besoin de mocker le service
 
+        private JobOfferDto createTestDto(String title, String company, String offerUrl, java.time.LocalDate applicationDate, String status) {
+                return new JobOfferDto(
+                                java.util.UUID.randomUUID(),
+                                title,
+                                company,
+                                "Paris",
+                                offerUrl,
+                                new java.math.BigDecimal("50000"),
+                                "John Doe",
+                                status,
+                                false,
+                                "PENDING",
+                                "NONE",
+                                applicationDate,
+                                "Some notes"
+                );
+        }
+
         @Test
         void should_create_job_offer_and_return_201_when_valid() throws Exception {
                 // Arrange : Prépare un JSON valide correspondant à notre DTO de création
@@ -46,7 +64,7 @@ class JobOfferControllerTest {
         @Test
         void should_get_all_job_offers_and_return_200() throws Exception {
                 // Arrange : Prépare une liste fictive contenant une offre d'emploi DTO
-                JobOfferDto mockOffer = new JobOfferDto(
+                JobOfferDto mockOffer = createTestDto(
                                 "Développeur Fullstack Java/Angular",
                                 "Google",
                                 "https://careers.google.com/jobs/123",
@@ -74,7 +92,7 @@ class JobOfferControllerTest {
                 // 1. On génère un UUID factice pour notre test
                 java.util.UUID jobId = java.util.UUID.randomUUID();
                 // Arrange : Prépare une liste fictive contenant une offre d'emploi DTO
-                JobOfferDto mockOffer = new JobOfferDto(
+                JobOfferDto mockOffer = createTestDto(
                                 "Développeur Fullstack Java/Angular",
                                 "Google",
                                 "https://careers.google.com/jobs/123",
@@ -129,7 +147,7 @@ class JobOfferControllerTest {
                                 }
                                 """;
                 // Le DTO mis à jour que notre faux service va retourner
-                JobOfferDto upMockOffer = new JobOfferDto(
+                JobOfferDto upMockOffer = createTestDto(
                                 "Développeur Senior Java/Angular",
                                 "Google France",
                                 "https://careers.google.com/jobs/123",

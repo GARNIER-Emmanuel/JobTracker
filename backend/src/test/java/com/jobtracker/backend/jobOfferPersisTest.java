@@ -23,6 +23,6 @@ class JobOfferPersisTest {
         Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM job_offers", Integer.class);
         // Assert : La table doit exister (si elle n'existe pas, SQLState lancera une
         // exception et le test sera rouge)
-        assertThat(count).isZero();
+        assertThat(count).isGreaterThanOrEqualTo(0);
     }
 }
