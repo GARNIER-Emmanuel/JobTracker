@@ -30,7 +30,7 @@
 <p>Liste des candidatures</p>
 
 @for (offer of filteredJobs(); track offer.id) {
-<app-job-card [job]="offer"></app-job-card>
+<app-job-card [job]="offer" (delete)="deleteJob($event)"></app-job-card>
 } @empty {
 <p class="no-result">Aucune offre ne correspond à votre recherche.</p>
 }

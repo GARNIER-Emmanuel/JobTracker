@@ -1,5 +1,5 @@
-<h2>Nouvelle Offre :</h2>
-<form [formGroup]="jobForm">
+<h2>{{ selectedJob() ? 'Modifier l\'offre :' : 'Nouvelle Offre :' }}</h2>
+<form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="title">Titre du poste </label>
         <input id="title" type="text" formControlName="title">
@@ -22,5 +22,40 @@
         <span class="error">La date ne peut pas être dans le futur.</span>
         }
     </div>
-    <button type="submit" [disabled]="jobForm.invalid">Ajouter</button>
+    <div class="form-group">
+        <label for="location">Localisation </label>
+        <input id="location" type="text" formControlName="location">
+    </div>
+    <div class="form-group">
+        <label for="salary">Salaire </label>
+        <input id="salary" type="number" formControlName="salary">
+    </div>
+    <div class="form-group">
+        <label for="notes">Notes </label>
+        <textarea id="notes" formControlName="notes"></textarea>
+    </div>
+    <div class="form-group checkbox-group">
+        <input id="contacted" type="checkbox" formControlName="contacted">
+        <label for="contacted">Premier contact établi</label>
+    </div>
+    <div class="form-group">
+        <label for="response">Réponse reçue </label>
+        <select id="response" formControlName="response">
+            <option value="PENDING">En attente</option>
+            <option value="YES">Oui</option>
+            <option value="NO">Non</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="remoteWork">Télétravail </label>
+        <select id="remoteWork" formControlName="remoteWork">
+            <option value="NONE">Aucun</option>
+            <option value="PARTIAL">Partiel</option>
+            <option value="OCCASIONAL">Occasionnel</option>
+        </select>
+    </div>
+    <button type="submit" [disabled]="jobForm.invalid">{{ selectedJob() ? 'Enregistrer les modifications' : 'Ajouter' }}</button>
+    @if (selectedJob()) {
+        <button type="button" class="cancel-btn" (click)="cancelEdit()">Annuler</button>
+    }
 </form>

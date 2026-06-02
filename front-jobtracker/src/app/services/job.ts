@@ -28,6 +28,7 @@ export class Job {
   });
 
   readonly searchQuery = signal<string>('');
+  readonly selectedJobForEdit = signal<JobOffer | null>(null);
 
   readonly filteredJobs = computed(() => {
     const jobs = this._jobs();

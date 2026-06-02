@@ -1,3 +1,50 @@
-<h2>JobCard Card</h2>
-<h3>{{job.title}}</h3>
-<p class="company">{{job.company}}</p>
+<div class="job-card-header">
+  <h3>{{job.title}}</h3>
+  <p class="company">{{job.company}}</p>
+  @if (job.location) {
+    <p class="location">📍 {{job.location}}</p>
+  }
+</div>
+
+<div class="job-card-details">
+  @if (job.salary) {
+    <p class="salary">💰 {{job.salary}} €</p>
+  }
+  @if (job.notes) {
+    <p class="notes">📝 {{job.notes}}</p>
+  }
+  <p class="contact">
+    {{ job.contacted ? '📞 Premier contact établi' : '⏳ Aucun contact établi' }}
+  </p>
+  <p class="response">
+    @switch (job.response) {
+      @case ('YES') { ✅ Réponse positive }
+      @case ('NO') { ❌ Réponse négative }
+      @default { ⏳ Réponse en attente }
+    }
+  </p>
+  @if (job.remoteWork && job.remoteWork !== 'NONE') {
+    <p class="remote">
+      💻 Télétravail : 
+      @switch (job.remoteWork) {
+        @case ('PARTIAL') { Partiel }
+        @case ('OCCASIONAL') { Occasionnel }
+      }
+    </p>
+  }
+  <p class="link">
+    <a [href]="job.offerUrl" target="_blank">🔗 Voir l'offre originale</a>
+  </p>
+</div>
+
+<div class="actions">
+    <select [value]="job.status" (change)="onStatusChange($event)">
+        <option value="WISHLIST">À postuler</option>
+        <option value="APPLIED">Postulé</option>
+        <option value="INTERVIEW">Entretien</option>
+        <option value="OFFER">Offre reçue</option>
+        <option value="REJECTED">Refusé</option>
+    </select>
+    <button class="edit-btn" (click)="onEdit()">Modifier</button>
+    <button class="delete-btn" (click)="onDelete()">Supprimer</button>
+</div>

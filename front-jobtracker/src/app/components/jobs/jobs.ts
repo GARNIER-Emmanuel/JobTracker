@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { JobCard } from './job-card/job-card';
 import { Job } from '../../services/job';
+import { JobOffer } from '../../models/jobOffer.model';
 
 @Component({
   selector: 'app-jobs',
@@ -18,5 +19,11 @@ export class Jobs implements OnInit {
 
   ngOnInit(): void {
     this.jobService.loadAll();
+  }
+
+  deleteJob(job: JobOffer): void {
+    if (job.id) {
+      this.jobService.delete(job.id);
+    }
   }
 }

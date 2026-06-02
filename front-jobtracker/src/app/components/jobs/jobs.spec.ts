@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Job } from '../../services/job';
 import { JobOffer, JobStatus, Response } from '../../models/jobOffer.model';
+import { vi } from 'vitest';
 
 describe('Jobs', () => {
   let component: Jobs;
@@ -118,5 +119,14 @@ describe('Jobs', () => {
     expect(results.length).toBe(2);
     expect(results.some(j => j.id === '1')).toBe(true);
     expect(results.some(j => j.id === '3')).toBe(true);
+  });
+
+  it('should call jobService.delete when deleteJob is called with a valid job ID', () => {
+    const spy = vi.spyOn(jobService, 'delete').mockImplementation(() => {});
+    const jobToDelete = mockOffers[0];
+
+    component.deleteJob(jobToDelete);
+
+    expect(spy).toHaveBeenCalledWith('1');
   });
 });

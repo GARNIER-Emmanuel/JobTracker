@@ -1,17 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { JobForm } from './job-form';
+import { Job } from '../../../services/job';
+import { JobStatus } from '../../../models/jobOffer.model';
+import { vi } from 'vitest';
+import { signal } from '@angular/core';
 
 describe('JobForm', () => {
   let component: JobForm;
   let fixture: ComponentFixture<JobForm>;
+  let jobServiceSpy: any;
 
   beforeEach(async () => {
+    const spy = {
+      create: vi.fn(),
+      update: vi.fn(),
+      selectedJobForEdit: signal<any>(null)
+    };
+
     await TestBed.configureTestingModule({
       imports: [JobForm],
+      providers: [
+        { provide: Job, useValue: spy }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(JobForm);
     component = fixture.componentInstance;
+    jobServiceSpy = TestBed.inject(Job);
     fixture.detectChanges();
   });
 
@@ -72,5 +87,38 @@ describe('JobForm', () => {
     const todayStr = new Date().toISOString().split('T')[0];
     dateCtrl?.setValue(todayStr);
     expect(dateCtrl?.valid).toBe(true);
+  });
+
+  it('should call jobService.create and reset form when onSubmit is called and form is valid', () => {
+    const mockOffer = {
+      title: 'Dev Front',
+      company: 'Tech A',
+      offerUrl: 'https://example.com',
+      applicationDate: '2026-06-01',
+      location: '',
+      salary: null,
+      notes: '',
+      contacted: false,
+      response: 'PENDING',
+      remoteWork: 'NONE'
+    };
+
+    // Remplir le formulaire avec des données valides
+    component.jobForm.setValue(mockOffer);
+    expect(component.jobForm.valid).toBe(true);
+
+    // Déclencher la soumission
+    component.onSubmit();
+
+    // Valider que le service est appelé avec les bonnes valeurs (incluant le statut par défaut)
+    const expectedOffer = {
+      ...mockOffer,
+      status: JobStatus.WISHLIST
+    };
+    expect(jobServiceSpy.create).toHaveBeenCalledWith(expectedOffer);
+
+    // Valider que le formulaire est réinitialisé avec des valeurs vides
+    expect(component.jobForm.get('title')?.value).toBe('');
+    expect(component.jobForm.get('company')?.value).toBe('');
   });
 });
