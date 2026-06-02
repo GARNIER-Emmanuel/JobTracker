@@ -1,4 +1,36 @@
+<!-- 1. Barre de recherche -->
+<input type="text" [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"
+    placeholder="Rechercher...">
+
+<!-- 2. Tableau de bord des statistiques globales (affiché une seule fois en haut) -->
+<div class="stats-dashboard">
+    <div class="stat-card">
+        <span class="label">Total : </span>
+        <span class="value">{{ statistiques().total }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="label">À postuler : </span>
+        <span class="value">{{ statistiques().wishlist }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="label">Postulé : </span>
+        <span class="value">{{ statistiques().applied }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="label">Entretien : </span>
+        <span class="value">{{ statistiques().interview }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="label">Offres reçues : </span>
+        <span class="value">{{ statistiques().offer }}</span>
+    </div>
+</div>
+
+<!-- 3. Liste des candidatures filtrées -->
 <p>Liste des candidatures</p>
-@for (offer of jobService.jobs(); track offer.id) {
+
+@for (offer of filteredJobs(); track offer.id) {
 <app-job-card [job]="offer"></app-job-card>
+} @empty {
+<p class="no-result">Aucune offre ne correspond à votre recherche.</p>
 }

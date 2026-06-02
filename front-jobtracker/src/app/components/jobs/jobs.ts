@@ -11,6 +11,10 @@ import { Job } from '../../services/job';
 export class Jobs implements OnInit {
 
   protected readonly jobService = inject(Job);
+  // Délégué pour que le test component.statistiques soit satisfait
+  readonly statistiques = this.jobService.statistiques;
+  readonly searchQuery = this.jobService.searchQuery;
+  readonly filteredJobs = this.jobService.filteredJobs;
 
   ngOnInit(): void {
     this.jobService.loadAll();
