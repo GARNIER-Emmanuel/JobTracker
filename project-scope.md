@@ -99,15 +99,15 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
   - **Objectif** : Intégrer l'interface de visualisation responsive avec les cartes d'offres.
   - **Tests** : Validation du comportement des `@Input` et `@Output` des cartes.
 
-- [ ] **Feature 3.4 : Formulaire Réactif & Validations croisées**
+- [x] **Feature 3.4 : Formulaire Réactif & Validations croisées**
   - **Objectif** : Formulaire d'ajout/modification avec validation du format URL et règles conditionnelles d'affichage.
   - **Tests** : Validation de l'activation/désactivation du formulaire et de l'affichage des alertes de saisie.
 
-- [ ] **Feature 3.5 : Dashboard Statistique & Filtres dynamiques (Signals calculés)**
+- [x] **Feature 3.5 : Dashboard Statistique & Filtres dynamiques (Signals calculés)**
   - **Objectif** : Fournir une barre de recherche instantanée et des KPI automatiques basés sur des signaux de type `computed`.
   - **Tests** : Vérification de la mise à jour automatique des métriques sans appels API superflus.
 
-- [ ] **Feature 3.6 : Intercepteur HTTP fonctionnel**
+- [x] **Feature 3.6 : Intercepteur HTTP fonctionnel**
   - **Objectif** : Intercepter globalement les erreurs de communication pour avertir l'utilisateur de manière ergonomique.
   - **Tests** : Simulation d'erreurs HTTP et vérification du déclenchement du flux d'alerte.
 
