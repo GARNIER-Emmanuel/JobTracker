@@ -119,3 +119,25 @@ Le projet est divisé en livrables élémentaires à développer de manière sé
     - Création d'un workflow GitHub Actions dans le dossier `.github/workflows/ci.yml`.
     - **Job Backend** : Configuration de l'environnement JDK 17, mise en cache Maven et exécution des tests via `mvn test`.
     - **Job Frontend** : Configuration de l'environnement Node.js, installation des dépendances et exécution des tests unitaires Angular en mode headless (sans navigateur graphique).
+
+### Phase 4 : UI/UX Premium (PrimeNG)
+
+- [ ] **Feature 5.1 : Configuration & Thème**
+  - **Objectif** : Installer PrimeNG, configurer Google Fonts, définir le design system CSS de base et le toggle de thème.
+  - **Tests** : Validation du chargement correct des styles et de l'intégration dans `app.config.ts`.
+
+- [ ] **Feature 5.2 : Layout & Shimmer**
+  - **Objectif** : Layout avec header fixe (glassmorphism) et composant Skeleton Shimmer pour les états de chargement.
+  - **Tests** : Validation visuelle des états de chargement et des transitions.
+
+- [ ] **Feature 5.3 : Cartes Premium & Animations**
+  - **Objectif** : Refonte des cartes avec `p-card`, effets de survol premium et animations d'entrée.
+  - **Tests** : Tests d'animation et de réactivité au survol.
+
+- [ ] **Feature 5.4 : Formulaires Avancés & Modals**
+  - **Objectif** : Formulaire dans un panneau latéral glissant (`p-sidebar` ou dialogue) avec validation en temps réel esthétique.
+  - **Tests** : Tests de validation des champs du formulaire et d'ouverture/fermeture du volet.
+
+- [ ] **Feature 5.5 : Notifications & Toasts**
+  - **Objectif** : Intégration de `MessageService` (PrimeNG Toast) pour les messages de succès/erreur des opérations CRUD.
+  - **Tests** : Vérification du déclenchement du toast lors des actions de création, mise à jour ou suppression.

@@ -114,16 +114,16 @@ graph TD
 
 Voici la feuille de route pour monter en compétences et implémenter cette UI pro :
 
-- [ ] **Étape 1 : Configuration & Thème**
+- [x] **Feature 5.1 : Configuration & Thème**
   * Installer PrimeNG et configurer les polices Google Fonts.
   * Mettre en place les variables de thème globales et le toggle Dark/Light.
-- [ ] **Étape 2 : Layout & Shimmer**
+- [ ] **Feature 5.2 : Layout & Shimmer**
   * Créer le layout principal avec une barre de navigation fixe et un effet de flou en arrière-plan (glassmorphism).
   * Créer un composant Skeleton Shimmer pour la liste des offres en attente de chargement.
-- [ ] **Étape 3 : Cartes Premium & Animations**
+- [ ] **Feature 5.3 : Cartes Premium & Animations**
   * Refondre les cartes d'offres avec PrimeNG `p-card` et des micro-interactions au survol.
   * Implémenter l'animation de chargement des cartes avec `@angular/animations`.
-- [ ] **Étape 4 : Formulaires Avancés & Modals**
+- [ ] **Feature 5.4 : Formulaires Avancés & Modals**
   * Remplacer le formulaire en ligne par un panneau latéral (`p-sidebar` ou dialog PrimeNG) glissant avec un design aéré et des validations en temps réel esthétiques.
-- [ ] **Étape 5 : Notifications & Toasts**
+- [ ] **Feature 5.5 : Notifications & Toasts**
   * Configurer le service de toast de PrimeNG (`MessageService`) pour notifier de manière élégante chaque succès/erreur d'action CRUD.
