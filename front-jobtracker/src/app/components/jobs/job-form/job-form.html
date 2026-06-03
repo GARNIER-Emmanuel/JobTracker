@@ -1,61 +1,106 @@
-<h2>{{ selectedJob() ? 'Modifier l\'offre :' : 'Nouvelle Offre :' }}</h2>
-<form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="title">Titre du poste </label>
-        <input id="title" type="text" formControlName="title">
-    </div>
-    <div class="form-group">
-        <label for="company">Nom de l'entreprise </label>
-        <input id="company" type="text" formControlName="company">
-    </div>
-    <div class="form-group">
-        <label for="offerUrl">Lien de l'offre </label>
-        <input id="offerUrl" type="text" formControlName="offerUrl">
-        @if (jobForm.get('offerUrl')?.errors?.['pattern'] && jobForm.get('offerUrl')?.touched) {
-        <span class="error">Le lien doit être une URL valide (ex: http...).</span>
-        }
-    </div>
-    <div class="form-group">
-        <label for="applicationDate">Date de candidature </label>
-        <input id="applicationDate" type="date" formControlName="applicationDate">
-        @if (jobForm.get('applicationDate')?.errors?.['futureDate'] && jobForm.get('applicationDate')?.touched) {
-        <span class="error">La date ne peut pas être dans le futur.</span>
-        }
-    </div>
-    <div class="form-group">
-        <label for="location">Localisation </label>
-        <input id="location" type="text" formControlName="location">
-    </div>
-    <div class="form-group">
-        <label for="salary">Salaire </label>
-        <input id="salary" type="number" formControlName="salary">
-    </div>
-    <div class="form-group">
-        <label for="notes">Notes </label>
-        <textarea id="notes" formControlName="notes"></textarea>
-    </div>
-    <div class="form-group checkbox-group">
-        <input id="contacted" type="checkbox" formControlName="contacted">
-        <label for="contacted">Premier contact établi</label>
-    </div>
-    <div class="form-group">
-        <label for="response">Réponse reçue </label>
-        <select id="response" formControlName="response">
-            <option value="PENDING">En attente</option>
-            <option value="YES">Oui</option>
-            <option value="NO">Non</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="remoteWork">Télétravail </label>
-        <select id="remoteWork" formControlName="remoteWork">
-            <option value="NONE">Aucun</option>
-            <option value="PARTIAL">Partiel</option>
-            <option value="OCCASIONAL">Occasionnel</option>
-        </select>
-    </div>
-    <button type="submit" [disabled]="jobForm.invalid">{{ selectedJob() ? 'Enregistrer les modifications' : 'Ajouter' }}</button>
-    @if (selectedJob()) {
-        <button type="button" class="cancel-btn" (click)="cancelEdit()">Annuler</button>
-    }
-</form>
+<p-drawer [visible]="jobService.isFormOpen()" (visibleChange)="onDrawerClose($event)" position="right"
+    styleClass="job-form-drawer" [blockScroll]="true">
+
+    <ng-template pTemplate="header">
+        <h3>{{ selectedJob() ? 'Modifier la candidature' : 'Ajouter une candidature' }}</h3>
+    </ng-template>
+
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="form-container">
+
+        <!-- Titre du poste (Text Input PrimeNG) -->
+        <div class="form-field">
+            <label for="title">Titre du poste *</label>
+            <input id="title" type="text" pInputText formControlName="title" placeholder="ex: Développeur Angular">
+            @if (jobForm.get('title')?.invalid && jobForm.get('title')?.touched) {
+            <small class="error-msg">Le titre du poste est requis.</small>
+            }
+        </div>
+
+        <!-- Nom de l'entreprise (Text Input PrimeNG) -->
+        <div class="form-field">
+            <label for="company">Nom de l'entreprise *</label>
+            <input id="company" type="text" pInputText formControlName="company" placeholder="ex: Google">
+            @if (jobForm.get('company')?.invalid && jobForm.get('company')?.touched) {
+            <small class="error-msg">Le nom de l'entreprise est requis.</small>
+            }
+        </div>
+
+        <!-- Lien de l'offre (Text Input PrimeNG avec deux conditions d'erreur) -->
+        <div class="form-field">
+            <label for="offerUrl">Lien de l'offre *</label>
+            <input id="offerUrl" type="text" pInputText formControlName="offerUrl" placeholder="https://...">
+            @if (jobForm.get('offerUrl')?.touched) {
+            @if (jobForm.get('offerUrl')?.hasError('required')) {
+            <small class="error-msg">Le lien de l'offre est requis.</small>
+            }
+            @if (jobForm.get('offerUrl')?.hasError('pattern')) {
+            <small class="error-msg">Le lien doit être une URL valide (ex: http...).</small>
+            }
+            }
+        </div>
+
+        <!-- Date de candidature (DatePicker PrimeNG) -->
+        <div class="form-field">
+            <label for="applicationDate">Date de candidature *</label>
+            <p-datepicker id="applicationDate" formControlName="applicationDate" dateFormat="yy-mm-dd"
+                placeholder="Choisir une date"></p-datepicker>
+            @if (jobForm.get('applicationDate')?.touched) {
+            @if (jobForm.get('applicationDate')?.hasError('required')) {
+            <small class="error-msg">La date de candidature est requise.</small>
+            }
+            @if (jobForm.get('applicationDate')?.hasError('futureDate')) {
+            <small class="error-msg">La date ne peut pas être dans le futur.</small>
+            }
+            }
+        </div>
+
+        <!-- Salaire (InputNumber PrimeNG avec formatage monétaire) -->
+        <div class="form-field">
+            <label for="salary">Rémunération annuelle (€)</label>
+            <p-inputnumber id="salary" formControlName="salary" mode="currency" currency="EUR" locale="fr-FR"
+                [useGrouping]="true" placeholder="ex: 45000"></p-inputnumber>
+        </div>
+
+        <!-- Localisation (Text Input PrimeNG) -->
+        <div class="form-field">
+            <label for="location">Localisation</label>
+            <input id="location" type="text" pInputText formControlName="location"
+                placeholder="ex: Paris, Télétravail...">
+        </div>
+
+        <!-- Télétravail (Sélecteur p-select PrimeNG) -->
+        <div class="form-field">
+            <label for="remoteWork">Télétravail</label>
+            <p-select id="remoteWork" [options]="remoteOptions" formControlName="remoteWork" optionLabel="label"
+                optionValue="value"></p-select>
+        </div>
+
+        <!-- Réponse (Sélecteur p-select PrimeNG) -->
+        <div class="form-field">
+            <label for="response">Réponse reçue</label>
+            <p-select id="response" [options]="responseOptions" formControlName="response" optionLabel="label"
+                optionValue="value"></p-select>
+        </div>
+
+        <!-- Premier contact (Bascule ToggleSwitch PrimeNG) -->
+        <div class="form-field toggle-field">
+            <p-toggleswitch id="contacted" formControlName="contacted"></p-toggleswitch>
+            <label for="contacted">Premier contact établi</label>
+        </div>
+
+        <!-- Notes (Zone de texte adaptative pInputTextarea) -->
+        <div class="form-field">
+            <label for="notes">Notes personnelles</label>
+            <textarea id="notes" pTextarea formControlName="notes" rows="4" [autoResize]="true"
+                placeholder="Ajouter des détails sur l'offre..."></textarea>
+        </div>
+
+        <!-- Boutons d'actions -->
+        <div class="form-actions">
+            <p-button label="Annuler" [outlined]="true" severity="secondary" (click)="cancelEdit()"
+                type="button"></p-button>
+            <p-button [label]="selectedJob() ? 'Enregistrer' : 'Ajouter'" [disabled]="jobForm.invalid"
+                type="submit"></p-button>
+        </div>
+    </form>
+</p-drawer>

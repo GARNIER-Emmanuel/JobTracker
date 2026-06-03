@@ -13,6 +13,7 @@ export class Job {
   // TODO: Déclarer les signaux _loading et loading en haut de la classe
   private readonly _loading = signal(false);
   readonly loading = this._loading.asReadonly()
+  readonly isFormOpen = signal(false);
 
   loadAll(): void {
     this._loading.set(true); // Début du chargement

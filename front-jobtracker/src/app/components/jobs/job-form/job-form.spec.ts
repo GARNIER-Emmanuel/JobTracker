@@ -4,23 +4,24 @@ import { Job } from '../../../services/job';
 import { JobStatus } from '../../../models/jobOffer.model';
 import { vi } from 'vitest';
 import { signal } from '@angular/core';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('JobForm', () => {
   let component: JobForm;
   let fixture: ComponentFixture<JobForm>;
   let jobServiceSpy: any;
-
   beforeEach(async () => {
     const spy = {
       create: vi.fn(),
       update: vi.fn(),
-      selectedJobForEdit: signal<any>(null)
+      selectedJobForEdit: signal<any>(null),
+      isFormOpen: signal<boolean>(false) // <-- Ajoute ce signal mocké
     };
-
     await TestBed.configureTestingModule({
       imports: [JobForm],
       providers: [
-        { provide: Job, useValue: spy }
+        { provide: Job, useValue: spy },
+        provideNoopAnimations() // <-- Évite les bugs d'animation JSDOM sur le p-drawer
       ]
     }).compileComponents();
 

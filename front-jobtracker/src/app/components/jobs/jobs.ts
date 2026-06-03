@@ -4,10 +4,11 @@ import { Job } from '../../services/job';
 import { JobOffer } from '../../models/jobOffer.model';
 import { Skeleton } from 'primeng/skeleton';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-jobs',
-  imports: [JobCard, Skeleton],
+  imports: [JobCard, Skeleton, Button],
   templateUrl: './jobs.html',
   styleUrl: './jobs.css',
   // Déclaration des animations Angular pour ce composant
@@ -45,4 +46,11 @@ export class Jobs implements OnInit {
       this.jobService.delete(job.id);
     }
   }
+
+
+  openAddForm(): void {
+    this.jobService.selectedJobForEdit.set(null); // S'assurer qu'on n'est pas en train d'éditer
+    this.jobService.isFormOpen.set(true); // Signaler au tiroir de s'ouvrir
+  }
+
 }

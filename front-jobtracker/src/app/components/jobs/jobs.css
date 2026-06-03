@@ -14,3 +14,15 @@
 .mb-2 {
     margin-bottom: 0.5rem;
 }
+
+.search-bar-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.search-bar-container input {
+    flex: 1;
+    /* Permet à la barre de recherche de prendre tout l'espace restant */
+}

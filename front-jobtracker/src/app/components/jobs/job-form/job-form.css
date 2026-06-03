@@ -1,0 +1,66 @@
+/* Définit une largeur confortable pour notre panneau de formulaire */
+.job-form-drawer {
+    width: 32rem !important;
+    max-width: 100vw;
+}
+
+/* Container de formulaire en Flexbox vertical */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 0.5rem 1rem 1.5rem 1rem;
+}
+
+/* Style de chaque champ de formulaire (label + input) */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-field label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* Style spécifique pour la ligne du commutateur ToggleSwitch */
+.toggle-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.toggle-field label {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+/* Message d'erreur sous les inputs */
+.error-msg {
+    color: var(--status-rejected);
+    /* Utilise la couleur rouge du thème */
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+/* Alignement des boutons d'actions en bas */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* S'assurer que tous les contrôles PrimeNG prennent 100% de la largeur */
+.form-field p-select,
+.form-field p-datepicker,
+.form-field p-inputnumber {
+    width: 100%;
+}

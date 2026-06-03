@@ -13,11 +13,12 @@
   - L'utilisation de $any($event.target).value permet de contourner les vérifications de type strict d'Angular 
     sur les éléments du DOM dans les templates HTML.
 -->
-<input 
-  type="text" 
-  [value]="searchQuery()" 
-  (input)="searchQuery.set($any($event.target).value)"
-  placeholder="Rechercher...">
+<div class="search-bar-container">
+  <input type="text" [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"
+    placeholder="Rechercher...">
+  <p-button label="Nouvelle candidature" icon="pi pi-plus" (click)="openAddForm()">
+  </p-button>
+</div>
 
 <!-- 
   2. TABLEAU DE BORD DES STATISTIQUES GLOBAL
@@ -69,7 +70,7 @@
   }
 </div>
 } @else {
-  <!-- 
+<!-- 
     B. LISTE DES CARTES AVEC ANIMATION D'ENTRÉE PROGRESSIVE (STAGGER)
     - [@listAnimation] : Liaison à l'animation déclarée dans jobs.ts.
       En liant l'animation à 'filteredJobs().length', Angular réactive l'animation d'entrée progressive 
@@ -78,11 +79,11 @@
     - track offer.id : Optimise le rendu en ne redessinant que les éléments modifiés.
     - @empty : Clause intégrée très pratique affichant un message de repli si le tableau filtré est vide.
   -->
-  <div [@listAnimation]="filteredJobs().length" class="jobs-list">
-    @for (offer of filteredJobs(); track offer.id) {
-      <app-job-card [job]="offer" (delete)="deleteJob($event)"></app-job-card>
-    } @empty {
-      <p class="no-result">Aucune offre ne correspond à votre recherche.</p>
-    }
-  </div>
+<div [@listAnimation]="filteredJobs().length" class="jobs-list">
+  @for (offer of filteredJobs(); track offer.id) {
+  <app-job-card [job]="offer" (delete)="deleteJob($event)"></app-job-card>
+  } @empty {
+  <p class="no-result">Aucune offre ne correspond à votre recherche.</p>
+  }
+</div>
 }
