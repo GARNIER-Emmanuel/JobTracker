@@ -1,50 +1,186 @@
-<div class="job-card-header">
-  <h3>{{job.title}}</h3>
-  <p class="company">{{job.company}}</p>
-  @if (job.location) {
-    <p class="location">📍 {{job.location}}</p>
-  }
-</div>
+<!-- 
+  =========================================
+  COMPOSANT PREMIUM : CARTE D'OFFRE D'EMPLOI
+  =========================================
+  Ce template utilise PrimeNG pour offrir une interface utilisateur moderne et réactive.
+  
+  Composant principal : <p-card>
+  - p-card fournit un conteneur stylisé (ombrage, bordures, espacements cohérents).
+  - Le style global et les variables CSS du thème sont appliqués via la classe personnalisée 'job-card'.
+-->
+<p-card styleClass="job-card">
+  
+  <!-- 
+    SLOT DE TITRE : ng-template pTemplate="title"
+    - Permet de personnaliser l'en-tête de la carte.
+    - IMPORTANT : Pour utiliser les directives pTemplate="...", vous devez obligatoirement
+      importer 'PrimeTemplate' de 'primeng/api' dans la section 'imports' du composant standalone .ts.
+      Sinon, Angular ignorera silencieusement le contenu de cette balise.
+  -->
+  <ng-template pTemplate="title">
+    <div class="card-header-row">
+      <!-- Titre de l'offre (ex: Développeur Angular) -->
+      <h3>{{ job.title }}</h3>
+      
+      <!-- 
+        BADGE DE STATUT : <p-tag>
+        - severity : Définit la couleur sémantique du badge (info=bleu, warn=orange, success=vert, danger=rouge).
+                     Calculé dynamiquement via getStatusSeverity(job.status) dans le fichier .ts.
+        - value : Le texte affiché dans le badge, résolu par le helper getStatusLabel(job.status).
+      -->
+      <p-tag [severity]="getStatusSeverity(job.status)" [value]="getStatusLabel(job.status)"></p-tag>
+    </div>
+  </ng-template>
 
-<div class="job-card-details">
-  @if (job.salary) {
-    <p class="salary">💰 {{job.salary}} €</p>
-  }
-  @if (job.notes) {
-    <p class="notes">📝 {{job.notes}}</p>
-  }
-  <p class="contact">
-    {{ job.contacted ? '📞 Premier contact établi' : '⏳ Aucun contact établi' }}
-  </p>
-  <p class="response">
-    @switch (job.response) {
-      @case ('YES') { ✅ Réponse positive }
-      @case ('NO') { ❌ Réponse négative }
-      @default { ⏳ Réponse en attente }
+  <!-- 
+    SLOT DE SOUS-TITRE : ng-template pTemplate="subtitle"
+    - Permet d'insérer des informations secondaires directement sous le titre.
+    - Ici, on affiche le nom de l'entreprise qui recrute.
+  -->
+  <ng-template pTemplate="subtitle">
+    <span class="company-name">{{ job.company }}</span>
+  </ng-template>
+
+  <!-- 
+    CORPS DE LA CARTE : Grille d'informations détaillées
+    - Utilise une structure flexible en grille CSS pour afficher les informations de manière responsive.
+    - Toutes les icônes proviennent de la bibliothèque PrimeIcons (préfixées par 'pi pi-*').
+  -->
+  <div class="card-details">
+    
+    <!-- 
+      1. Localisation (Conditionnelle)
+      - Utilise la directive @if intégrée d'Angular 17+ (plus performante que l'ancien *ngIf).
+      - Ne s'affiche que si la propriété 'location' est définie dans l'objet 'job'.
+    -->
+    @if (job.location) {
+    <div class="detail-item">
+      <i class="pi pi-map-marker detail-icon"></i>
+      <span>{{ job.location }}</span>
+    </div>
     }
-  </p>
-  @if (job.remoteWork && job.remoteWork !== 'NONE') {
-    <p class="remote">
-      💻 Télétravail : 
-      @switch (job.remoteWork) {
-        @case ('PARTIAL') { Partiel }
-        @case ('OCCASIONAL') { Occasionnel }
-      }
-    </p>
-  }
-  <p class="link">
-    <a [href]="job.offerUrl" target="_blank">🔗 Voir l'offre originale</a>
-  </p>
-</div>
 
-<div class="actions">
-    <select [value]="job.status" (change)="onStatusChange($event)">
-        <option value="WISHLIST">À postuler</option>
-        <option value="APPLIED">Postulé</option>
-        <option value="INTERVIEW">Entretien</option>
-        <option value="OFFER">Offre reçue</option>
-        <option value="REJECTED">Refusé</option>
-    </select>
-    <button class="edit-btn" (click)="onEdit()">Modifier</button>
-    <button class="delete-btn" (click)="onDelete()">Supprimer</button>
-</div>
+    <!-- 
+      2. Rémunération / Salaire (Conditionnelle)
+      - Affiche le salaire suivi de la devise locale (€).
+    -->
+    @if (job.salary) {
+    <div class="detail-item">
+      <i class="pi pi-wallet detail-icon"></i>
+      <span>{{ job.salary }} €</span>
+    </div>
+    }
+
+    <!-- 
+      3. Statut du contact (Obligatoire)
+      - Utilise une expression ternaire simple pour afficher si un premier contact a été établi.
+    -->
+    <div class="detail-item">
+      <i class="pi pi-phone detail-icon"></i>
+      <span>{{ job.contacted ? 'Premier contact établi' : 'Aucun contact établi' }}</span>
+    </div>
+
+    <!-- 
+      4. Statut de la réponse de l'entreprise
+      - Utilise la structure de contrôle @switch d'Angular 17+.
+      - Évalue 'job.response' et applique le @case correspondant pour traduire le statut en texte clair.
+    -->
+    <div class="detail-item">
+      <i class="pi pi-envelope detail-icon"></i>
+      <span>
+        @switch (job.response) {
+          @case ('YES') { Réponse positive }
+          @case ('NO') { Réponse négative }
+          @default { Réponse en attente }
+        }
+      </span>
+    </div>
+
+    <!-- 
+      5. Mode Télétravail (Conditionnelle)
+      - S'affiche uniquement si le télétravail est activé et différent de 'NONE'.
+      - Traduit la valeur brute ('PARTIAL' / 'OCCASIONAL') en français.
+    -->
+    @if (job.remoteWork && job.remoteWork !== 'NONE') {
+    <div class="detail-item">
+      <i class="pi pi-desktop detail-icon"></i>
+      <span>
+        Télétravail :
+        @switch (job.remoteWork) {
+          @case ('PARTIAL') { Partiel }
+          @case ('OCCASIONAL') { Occasionnel }
+        }
+      </span>
+    </div>
+    }
+
+    <!-- 
+      6. Notes personnelles (Conditionnelle)
+      - Permet d'afficher des commentaires libres ajoutés par l'utilisateur.
+    -->
+    @if (job.notes) {
+    <div class="detail-item notes-section">
+      <i class="pi pi-align-left detail-icon"></i>
+      <p class="notes-text">{{ job.notes }}</p>
+    </div>
+    }
+
+    <!-- 
+      7. Lien externe vers l'annonce
+      - Permet de rediriger l'utilisateur vers l'URL originale de l'offre.
+      - target="_blank" ouvre le lien dans un nouvel onglet.
+    -->
+    <div class="detail-item link-section">
+      <a [href]="job.offerUrl" target="_blank" class="offer-link">
+        <i class="pi pi-external-link detail-icon"></i>
+        <span>Voir l'annonce originale</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 
+    SLOT DE PIED DE PAGE : ng-template pTemplate="footer"
+    - Idéal pour placer des boutons d'actions ou des contrôles d'édition.
+  -->
+  <ng-template pTemplate="footer">
+    <div class="card-actions">
+      <!-- 
+        SÉLECTEUR DE STATUT : <p-select>
+        - Remplaçant moderne de la balise HTML <select>.
+        - [options] : Tableau d'objets [{label, value}] fourni par le composant TS.
+        - [ngModel] : Liaison de données bidirectionnelle vers le statut actuel du job.
+        - optionLabel / optionValue : Indiquent les propriétés de l'objet à utiliser pour le texte et la valeur.
+        - (onChange) : Événement personnalisé déclenché lors du changement de sélection.
+                       Envoie un objet de type { originalEvent: Event, value: any }.
+      -->
+      <p-select 
+        [options]="statusOptions" 
+        [ngModel]="job.status" 
+        optionLabel="label" 
+        optionValue="value"
+        (onChange)="onStatusChange($event)">
+      </p-select>
+
+      <!-- Groupe de boutons d'actions (Modifier / Supprimer) -->
+      <div class="buttons-group">
+        <!-- Bouton Modifier : [outlined]="true" pour un style épuré et sobre -->
+        <p-button 
+          icon="pi pi-pencil" 
+          label="Modifier" 
+          [outlined]="true" 
+          size="small" 
+          (click)="onEdit()">
+        </p-button>
+
+        <!-- Bouton Supprimer : severity="danger" applique la couleur rouge d'alerte -->
+        <p-button 
+          icon="pi pi-trash" 
+          label="Supprimer" 
+          severity="danger" 
+          size="small" 
+          (click)="onDelete()">
+        </p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-card>

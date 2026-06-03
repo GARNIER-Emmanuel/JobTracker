@@ -117,10 +117,10 @@ Voici la feuille de route pour monter en compétences et implémenter cette UI p
 - [x] **Feature 5.1 : Configuration & Thème**
   * Installer PrimeNG et configurer les polices Google Fonts.
   * Mettre en place les variables de thème globales et le toggle Dark/Light.
-- [ ] **Feature 5.2 : Layout & Shimmer**
+- [x] **Feature 5.2 : Layout & Shimmer**
   * Créer le layout principal avec une barre de navigation fixe et un effet de flou en arrière-plan (glassmorphism).
   * Créer un composant Skeleton Shimmer pour la liste des offres en attente de chargement.
-- [ ] **Feature 5.3 : Cartes Premium & Animations**
+- [x] **Feature 5.3 : Cartes Premium & Animations**
   * Refondre les cartes d'offres avec PrimeNG `p-card` et des micro-interactions au survol.
   * Implémenter l'animation de chargement des cartes avec `@angular/animations`.
 - [ ] **Feature 5.4 : Formulaires Avancés & Modals**

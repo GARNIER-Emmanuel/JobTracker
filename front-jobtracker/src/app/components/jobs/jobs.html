@@ -1,48 +1,88 @@
-<!-- 1. Barre de recherche -->
-<input type="text" [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"
-    placeholder="Rechercher...">
+<!-- 
+  ======================================================
+  PAGE D'ACCUEIL DES OFFRES D'EMPLOI : TABLEAU DE BORD
+  ======================================================
+  Ce template orchestre la recherche, les statistiques, le skeleton loading (shimmer)
+  et la liste animée des cartes d'offres d'emploi.
+-->
 
-<!-- 2. Tableau de bord des statistiques globales (affiché une seule fois en haut) -->
+<!-- 
+  1. BARRE DE RECHERCHE
+  - [value] : Liaison unidirectionnelle branchée sur le signal 'searchQuery()'.
+  - (input) : Met à jour la valeur du signal 'searchQuery' à chaque saisie utilisateur.
+  - L'utilisation de $any($event.target).value permet de contourner les vérifications de type strict d'Angular 
+    sur les éléments du DOM dans les templates HTML.
+-->
+<input 
+  type="text" 
+  [value]="searchQuery()" 
+  (input)="searchQuery.set($any($event.target).value)"
+  placeholder="Rechercher...">
+
+<!-- 
+  2. TABLEAU DE BORD DES STATISTIQUES GLOBAL
+  - Affiche un résumé rapide du nombre total d'offres par catégorie.
+  - Utilise le signal calculé 'statistiques()' (déclaré dans le JobService) pour se mettre à jour
+    automatiquement dès qu'une offre est ajoutée, modifiée ou supprimée.
+-->
 <div class="stats-dashboard">
-    <div class="stat-card">
-        <span class="label">Total : </span>
-        <span class="value">{{ statistiques().total }}</span>
-    </div>
-    <div class="stat-card">
-        <span class="label">À postuler : </span>
-        <span class="value">{{ statistiques().wishlist }}</span>
-    </div>
-    <div class="stat-card">
-        <span class="label">Postulé : </span>
-        <span class="value">{{ statistiques().applied }}</span>
-    </div>
-    <div class="stat-card">
-        <span class="label">Entretien : </span>
-        <span class="value">{{ statistiques().interview }}</span>
-    </div>
-    <div class="stat-card">
-        <span class="label">Offres reçues : </span>
-        <span class="value">{{ statistiques().offer }}</span>
-    </div>
+  <div class="stat-card">
+    <span class="label">Total : </span>
+    <span class="value">{{ statistiques().total }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">À postuler : </span>
+    <span class="value">{{ statistiques().wishlist }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Postulé : </span>
+    <span class="value">{{ statistiques().applied }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Entretien : </span>
+    <span class="value">{{ statistiques().interview }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Offres reçues : </span>
+    <span class="value">{{ statistiques().offer }}</span>
+  </div>
 </div>
 
-<!-- 3. Liste des candidatures filtrées -->
+<!-- 3. ZONE PRINCIPALE : CHARGEMENT OU LISTE DES OFFRES -->
 <p>Liste des candidatures</p>
 
+<!-- 
+  A. SQUELETTE DE CHARGEMENT (SHIMMER)
+  - @if (jobService.loading()) : S'affiche lorsque l'appel API vers le backend est en cours.
+  - Permet d'améliorer la perception de performance (UX Premium) grâce aux composants <p-skeleton>.
+  - p-skeleton simule la structure visuelle des cartes réelles pendant le chargement.
+-->
 @if (jobService.loading()) {
 <div class="skeleton-list">
-    @for (i of [1, 2, 3]; track i) {
-    <div class="skeleton-card">
-        <p-skeleton width="60%" height="1.5rem" styleClass="mb-2"></p-skeleton>
-        <p-skeleton width="40%" styleClass="mb-2"></p-skeleton>
-        <p-skeleton width="100%" height="5rem"></p-skeleton>
-    </div>
-    }
+  @for (i of [1, 2, 3]; track i) {
+  <div class="skeleton-card">
+    <!-- Un squelette pour le titre, un pour le sous-titre et un grand pour le contenu -->
+    <p-skeleton width="60%" height="1.5rem" styleClass="mb-2"></p-skeleton>
+    <p-skeleton width="40%" styleClass="mb-2"></p-skeleton>
+    <p-skeleton width="100%" height="5rem"></p-skeleton>
+  </div>
+  }
 </div>
 } @else {
-@for (offer of filteredJobs(); track offer.id) {
-<app-job-card [job]="offer" (delete)="deleteJob($event)"></app-job-card>
-} @empty {
-<p class="no-result">Aucune offre ne correspond à votre recherche.</p>
-}
+  <!-- 
+    B. LISTE DES CARTES AVEC ANIMATION D'ENTRÉE PROGRESSIVE (STAGGER)
+    - [@listAnimation] : Liaison à l'animation déclarée dans jobs.ts.
+      En liant l'animation à 'filteredJobs().length', Angular réactive l'animation d'entrée progressive 
+      de chaque carte enfant (effet cascade) à chaque fois que la taille de la liste change (recherche ou mise à jour).
+    - @for : Boucle moderne sur le signal calculé des offres filtrées 'filteredJobs()'.
+    - track offer.id : Optimise le rendu en ne redessinant que les éléments modifiés.
+    - @empty : Clause intégrée très pratique affichant un message de repli si le tableau filtré est vide.
+  -->
+  <div [@listAnimation]="filteredJobs().length" class="jobs-list">
+    @for (offer of filteredJobs(); track offer.id) {
+      <app-job-card [job]="offer" (delete)="deleteJob($event)"></app-job-card>
+    } @empty {
+      <p class="no-result">Aucune offre ne correspond à votre recherche.</p>
+    }
+  </div>
 }
