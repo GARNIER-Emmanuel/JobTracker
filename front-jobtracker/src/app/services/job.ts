@@ -10,10 +10,26 @@ export class Job {
   private readonly http = inject(HttpClient);
   readonly jobs = this._jobs.asReadonly();
 
+  // TODO: Déclarer les signaux _loading et loading en haut de la classe
+  private readonly _loading = signal(false);
+  readonly loading = this._loading.asReadonly()
+
   loadAll(): void {
+    this._loading.set(true); // Début du chargement
     this.http.get<JobOffer[]>('/api/jobs')
-      .subscribe((data) => { this._jobs.set(data) });
+      .subscribe({
+        next: (data) => {
+          this._jobs.set(data);
+        },
+        error: () => {
+          this._loading.set(false); // Fin du chargement en cas d'erreur
+        },
+        complete: () => {
+          this._loading.set(false); // Fin du chargement en cas de succès
+        }
+      });
   }
+
 
   readonly statistiques = computed(() => {
     const jobs = this._jobs();

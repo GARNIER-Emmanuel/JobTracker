@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { JobCard } from './job-card/job-card';
 import { Job } from '../../services/job';
 import { JobOffer } from '../../models/jobOffer.model';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-jobs',
-  imports: [JobCard],
+  imports: [JobCard, Skeleton],
   templateUrl: './jobs.html',
   styleUrl: './jobs.css',
 })

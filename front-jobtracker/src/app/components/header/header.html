@@ -1,0 +1,11 @@
+<header>
+    <div class="logo">
+        <i class="pi pi-briefcase logo-icon"></i>
+        <h1>JobTracker</h1>
+    </div>
+    <div class="actions">
+        <button class="theme-toggle" (click)="themeService.toggle()">
+            <i [class]="themeService.isDark() ? 'pi pi-sun' : 'pi pi-moon'"></i>
+        </button>
+    </div>
+</header>
