@@ -14,11 +14,17 @@
     sur les éléments du DOM dans les templates HTML.
 -->
 <div class="search-bar-container">
-  <input type="text" [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"
-    placeholder="Rechercher...">
+  <p-iconfield iconPosition="left">
+    <p-inputicon>
+      <i class="pi pi-search"></i>
+    </p-inputicon>
+    <input pInputText type="text" [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"
+      placeholder="Rechercher..." />
+  </p-iconfield>
   <p-button label="Nouvelle candidature" icon="pi pi-plus" (click)="openAddForm()">
   </p-button>
 </div>
+
 
 <!-- 
   2. TABLEAU DE BORD DES STATISTIQUES GLOBAL

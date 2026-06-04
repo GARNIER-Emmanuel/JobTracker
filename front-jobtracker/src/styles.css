@@ -1,3 +1,5 @@
+@import "primeicons/primeicons.css";
+
 :root {
     /* Mode Clair (Premium Light) */
     --bg-primary: #f8fafc;
@@ -42,3 +44,22 @@ body {
     margin: 0;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.error-banner {
+    background-color: var(--status-rejected);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ... styles pour .error-message et .close-btn ... */

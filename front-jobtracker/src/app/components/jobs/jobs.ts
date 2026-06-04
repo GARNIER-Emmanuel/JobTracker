@@ -5,10 +5,13 @@ import { JobOffer } from '../../models/jobOffer.model';
 import { Skeleton } from 'primeng/skeleton';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { Button } from 'primeng/button';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-jobs',
-  imports: [JobCard, Skeleton, Button],
+  imports: [JobCard, Skeleton, Button, IconField, InputIcon, InputText],
   templateUrl: './jobs.html',
   styleUrl: './jobs.css',
   // Déclaration des animations Angular pour ce composant
