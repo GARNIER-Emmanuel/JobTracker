@@ -3,18 +3,25 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http';
 import { Job } from './job';
 import { JobOffer, JobStatus, Response } from '../models/jobOffer.model';
+import { MessageService } from 'primeng/api';
 
 
 describe('Job', () => {
   let service: Job;
   let httpMock: HttpTestingController;
 
+  const messageServiceMock = {
+    add: vi.fn()
+  };
+
   beforeEach(() => {
+    messageServiceMock.add.mockClear();
     TestBed.configureTestingModule({
       providers: [
         Job,
         provideHttpClient(),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        { provide: MessageService, useValue: messageServiceMock }
       ]
     });
     service = TestBed.inject(Job);
@@ -88,6 +95,15 @@ describe('Job', () => {
 
     // 5. Valider que le signal réactif a bien été mis à jour avec l'offre créée
     expect(service.jobs()).toEqual([createdOffer]);
+
+    // 6. Vérifier que la notification de succès a bien été affichée
+    expect(messageServiceMock.add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'success',
+        summary: 'Succès',
+        detail: 'Offre créée avec succès'
+      })
+    );
   });
 
   it('should update a job and replace it in the jobs signal', () => {
@@ -123,6 +139,15 @@ describe('Job', () => {
 
     // 4. Valider que le signal réactif local reflète instantanément le changement
     expect(service.jobs()[0].status).toBe(JobStatus.APPLIED);
+
+    // 5. Vérifier que la notification de succès a bien été affichée
+    expect(messageServiceMock.add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'success',
+        summary: 'Succès',
+        detail: 'Offre mise à jour avec succès'
+      })
+    );
   });
 
   it('should delete a job and remove it from the jobs signal', () => {
@@ -153,6 +178,15 @@ describe('Job', () => {
 
     // 4. Valider que l'offre a bien été éjectée du signal réactif local
     expect(service.jobs()).toEqual([]);
+
+    // 5. Vérifier que la notification de succès a bien été affichée
+    expect(messageServiceMock.add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'info',
+        summary: 'Suppression',
+        detail: 'Offre supprimée avec succès'
+      })
+    );
   });
 });
 

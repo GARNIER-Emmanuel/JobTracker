@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { JobOffer, JobStatus } from '../models/jobOffer.model';
 import { HttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ export class Job {
   private readonly _jobs = signal<JobOffer[]>([]);
   private readonly http = inject(HttpClient);
   readonly jobs = this._jobs.asReadonly();
+  private readonly messageService = inject(MessageService);
 
   // TODO: Déclarer les signaux _loading et loading en haut de la classe
   private readonly _loading = signal(false);
@@ -65,6 +67,12 @@ export class Job {
       .subscribe((newJob) => {
         // Ajoute la nouvelle offre retournée par la BDD à la fin du tableau réactif
         this._jobs.update((jobs) => [...jobs, newJob]);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Succès',
+          detail: 'Offre créée avec succès'
+        });
       });
   }
 
@@ -77,6 +85,11 @@ export class Job {
         this._jobs.update((jobs) =>
           jobs.map((job) => (job.id === id ? updatedJob : job))
         );
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Succès',
+          detail: 'Offre mise à jour avec succès'
+        })
       });
   }
 
@@ -86,6 +99,11 @@ export class Job {
       .subscribe(() => {
         // Filtre le tableau réactif local pour en exclure l'offre supprimée
         this._jobs.update((jobs) => jobs.filter((job) => job.id !== id));
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Suppression',
+          detail: 'Offre supprimée avec succès'
+        })
       });
   }
 

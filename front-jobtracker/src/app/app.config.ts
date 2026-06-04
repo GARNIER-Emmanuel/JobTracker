@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -21,6 +22,7 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: '[data-theme="dark"]'
         }
       }
-    })
+    }),
+    MessageService
   ]
 };

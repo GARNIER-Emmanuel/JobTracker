@@ -123,7 +123,7 @@ Voici la feuille de route pour monter en compétences et implémenter cette UI p
 - [x] **Feature 5.3 : Cartes Premium & Animations**
   * Refondre les cartes d'offres avec PrimeNG `p-card` et des micro-interactions au survol.
   * Implémenter l'animation de chargement des cartes avec `@angular/animations`.
-- [ ] **Feature 5.4 : Formulaires Avancés & Modals**
+- [x] **Feature 5.4 : Formulaires Avancés & Modals**
   * Remplacer le formulaire en ligne par un panneau latéral (`p-sidebar` ou dialog PrimeNG) glissant avec un design aéré et des validations en temps réel esthétiques.
-- [ ] **Feature 5.5 : Notifications & Toasts**
+- [x] **Feature 5.5 : Notifications & Toasts**
   * Configurer le service de toast de PrimeNG (`MessageService`) pour notifier de manière élégante chaque succès/erreur d'action CRUD.

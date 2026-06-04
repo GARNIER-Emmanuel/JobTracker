@@ -1,10 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
+import { MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [
+        {
+          provide: MessageService,
+          useValue: {
+            add: vi.fn(),
+            messageObserver: new Subject(),
+            clearObserver: new Subject()
+          }
+        }]
     }).compileComponents();
   });
 

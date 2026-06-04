@@ -6,6 +6,7 @@ import { Job } from '../../services/job';
 import { JobOffer, JobStatus, Response } from '../../models/jobOffer.model';
 import { vi } from 'vitest';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { MessageService } from 'primeng/api';
 
 /**
  * Suite de tests unitaires pour le composant principal Jobs.
@@ -63,7 +64,8 @@ describe('Jobs', () => {
         // IMPORTANT : provideNoopAnimations() désactive les animations réelles dans les tests.
         // C'est indispensable sous JSDOM qui ne prend pas en charge les APIs d'animation CSS/Web
         // et lèverait une exception : "Unexpected synthetic property @listAnimation found".
-        provideNoopAnimations()
+        provideNoopAnimations(),
+        { provide: MessageService, useValue: { add: vi.fn() } }
       ]
     }).compileComponents();
 
@@ -77,7 +79,7 @@ describe('Jobs', () => {
 
     // 2. Intercepte l'appel HTTP attendu vers '/api/jobs' généré par loadAll()
     const req = httpMock.expectOne('/api/jobs');
-    
+
     // 3. Flush (simule la réponse du serveur) avec nos offres fictives
     req.flush(mockOffers);
 
@@ -99,7 +101,7 @@ describe('Jobs', () => {
     // Les statistiques sont exposées via un signal calculé (computed).
     // On l'appelle comme une fonction : statistiques()
     expect(component.statistiques().total).toBe(3);
-    
+
     // Vérification de la ventilation par statut
     expect(component.statistiques().wishlist).toBe(1);
     expect(component.statistiques().applied).toBe(1);
@@ -111,7 +113,7 @@ describe('Jobs', () => {
   it('should return all jobs when search query is empty', () => {
     // On met à jour la valeur du signal writable 'searchQuery'
     component.searchQuery.set('');
-    
+
     // L'assertion vérifie le signal calculé filteredJobs() dépendant de searchQuery
     expect(component.filteredJobs().length).toBe(3);
   });
@@ -120,7 +122,7 @@ describe('Jobs', () => {
   it('should filter jobs by title (case-insensitive)', () => {
     // Recherche de 'angular'
     component.searchQuery.set('angular');
-    
+
     // On s'attend à ne recevoir qu'un seul élément correspondant
     expect(component.filteredJobs().length).toBe(1);
     expect(component.filteredJobs()[0].title).toBe('Développeur Angular');
@@ -130,7 +132,7 @@ describe('Jobs', () => {
   it('should filter jobs by company name', () => {
     // Recherche de 'Tech Corp' (présent sur l'offre 1 et 3)
     component.searchQuery.set('Tech Corp');
-    
+
     const results = component.filteredJobs();
     expect(results.length).toBe(2);
     expect(results.some(j => j.id === '1')).toBe(true);
@@ -140,7 +142,7 @@ describe('Jobs', () => {
   // Test de la suppression
   it('should call jobService.delete when deleteJob is called with a valid job ID', () => {
     // On crée un espion (spy) sur la méthode 'delete' du service pour valider son appel
-    const spy = vi.spyOn(jobService, 'delete').mockImplementation(() => {});
+    const spy = vi.spyOn(jobService, 'delete').mockImplementation(() => { });
     const jobToDelete = mockOffers[0];
 
     component.deleteJob(jobToDelete);
