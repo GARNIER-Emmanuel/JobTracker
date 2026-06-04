@@ -32,10 +32,12 @@ JobTracker/
 
 ### Frontend
 * **Framework** : Angular 18+ (Composants 100% Standalone)
+* **Composants d'UI** : PrimeNG (v21+) avec le preset de thème Aura
+* **Icônes** : PrimeIcons
 * **Réactivité** : Angular Signals (`signal`, `computed`, `effect`)
 * **Asynchronisme** : RxJS & interopérabilité avec Signals (`toSignal`, `toObservable`)
 * **Formulaires** : Reactive Forms avec validations avancées
-* **Style** : Vanilla CSS moderne, flexible et responsive
+* **Style** : Vanilla CSS moderne couplé aux styles de PrimeNG (flexible et responsive)
 
 ---
 
